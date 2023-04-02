@@ -42,8 +42,8 @@ async function transfer(from_, to, amt){
 //function calle:
 
 //  mintTokens();
-// checkBalance('0xaf28babb597903f16a4ede2a08fc9393f451034b');
-// transfer('0x717c913b027e831f82b8623be4550e2e92fb96b4', '0xaf28babb597903f16a4ede2a08fc9393f451034b', 1);
+// checkBalance('0x717c913b027e831f82b8623be4550e2e92fb96b4');
+transfer('0x717c913b027e831f82b8623be4550e2e92fb96b4', '0xaf28babb597903f16a4ede2a08fc9393f451034b', 1);
 
 
 
