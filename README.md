@@ -8,7 +8,7 @@ This project is a private blockchain network that utilizes the Geth (Go-Ethereum
 * Node.js and npm (https://nodejs.org/en)
 
 
-## Run Locally
+## Installation
 
 Clone the project
 
