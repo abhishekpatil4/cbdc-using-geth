@@ -2,6 +2,14 @@ const Web3 = require('web3');
 const fs = require('fs');
 const path = require('path');
 
+// express for handling APIs
+var express = require('express');
+var bodyParser = require('body-parser');
+
+var app = express();
+app.use(bodyParser.urlencoded({extended : true}));
+app.use(bodyParser.json());
+
 // Set up Web3 provider
 var web3 = new Web3('http://localhost:8545')
 
@@ -23,6 +31,7 @@ async function checkBalance(account) {
   try {
     let balance = await contract.methods.balanceOf(account).call();
     console.log(`Account balance of ${account}: ${balance}`);
+    return balance;
   } catch (error) {
     console.error(error);
   }
@@ -38,12 +47,57 @@ async function transfer(from_, to, amt){
     }
 }
 
+// currently not in use - - - - - - - - - - - - - - - - - - - - 
+async function totalSupply(){
+  try{
+      let totalSupply = await contract.methods.totalSupply().call();
+      console.log('\nTotal supply: ' + totalSupply + '\n');
+  }catch(error){
+      console.error(error);
+  }
+}
+// currently not in use - - - - - - - - - - - - - - - - - - - - 
 
-//function calle:
+app.get('/mint', function(req, res){
+   mintTokens();  
+})
 
-//  mintTokens();
-// checkBalance('0x717c913b027e831f82b8623be4550e2e92fb96b4');
-transfer('0x717c913b027e831f82b8623be4550e2e92fb96b4', '0xaf28babb597903f16a4ede2a08fc9393f451034b', 1);
+app.post('/getBalance', function(req, res){
+  let address = req.body.address;
+  checkBalance(address);  
+  res.redirect('/');
+})
+
+async function unlockAccount(accountAddress, ToAddress, amount, accountPassphrase) {
+  try {
+    const unlocked = await web3.eth.personal.unlockAccount(accountAddress, accountPassphrase, 300);
+
+    if (unlocked) {
+      console.log(`Account ${accountAddress} is now unlocked!`);
+    } else {
+      console.error(`Failed to unlock account ${accountAddress}`);
+    }
+    transfer(accountAddress, ToAddress, amount);
+  } catch (error) {
+    console.error(`Error unlocking account ${accountAddress}: ${error}`);
+  }
+}
 
 
+app.post('/transfer', function(req, res){
+  let FromAddress = req.body.FromAddress;
+  let pass = req.body.pass;
+  let ToAddress = req.body.ToAddress;
+  let amount = req.body.amount;
+  unlockAccount(FromAddress, ToAddress, amount, pass);
+  res.redirect('/');
+})
+
+app.get('/', function(request, response) {
+	response.sendFile(path.join(__dirname + '/home.html'));
+});
+
+app.listen(3000, ()=>{
+  console.log("Server is listening on port 3000");
+});
 

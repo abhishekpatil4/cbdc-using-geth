@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Blockchain Transaction</title>
+		<style>
+		.login-form {
+			width: 300px;
+			margin: 0 auto;
+			font-family: Tahoma, Geneva, sans-serif;
+		}
+		.login-form h1 {
+			text-align: center;
+			color: #4d4d4d;
+			font-size: 24px;
+			padding: 20px 0 20px 0;
+		}
+		.login-form input[type="number"],
+		.login-form input[type="text"] {
+			width: 100%;
+			padding: 15px;
+			border: 1px solid #dddddd;
+			margin-bottom: 15px;
+			box-sizing:border-box;
+		}
+		.login-form input[type="submit"] {
+			width: 100%;
+			padding: 15px;
+			background-color: #0f579e;
+			border: 0;
+			box-sizing: border-box;
+			cursor: pointer;
+			font-weight: bold;
+			color: #ffffff;
+		}
+		</style>
+	</head>
+	<body>
+		<div class="login-form">
+			<h1>CBDC Implementaton using Go-Ethereum</h1>
+			<form  action="mint" method="get" style="padding-bottom: 20px;">
+				<input type="submit" value="Mint 2000">
+			</form>
+			<form action="/getBalance" method="post" style="padding-top: 50px;">
+				Account Address:<input type="text" name="address" placeholder="0x......" required>
+				<!-- Contract Address:<input type="text" name="contractAddress" placeholder="0x......" required>
+				ABI:<input type="text" name="abi" placeholder="[...]" required>
+				Value:<input type="number" name="value" placeholder="" required> -->
+				<input type="submit" value="Check Balance">
+			</form>
+			<form  action="transfer" method="post" style="padding-top: 50px;">
+				From Address:<input type="text" name="FromAddress" placeholder="0x......" required>
+				<input type="text" name="pass" placeholder="Pass Phrase" required>
+				To Address:<input type="text" name="ToAddress" placeholder="0x......" required>
+				Token Amount:<input type="number" name="amount" placeholder="0x......" required>
+				<input type="submit" value="Transfer">
+			</form>
+		</div>
+	</body>
+</html>
